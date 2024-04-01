@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+	<meta charset="UTF-8">
+
+	<title>Register Form</title>
+
+	<link rel="stylesheet" href="..\static\css\regStyle.css">
+
+	<script src="https://code.jquery.com/jquery-3.7.1.js"
+		integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+	<script src="../static/js/prefixfree.min.js"></script>
+	<script src="../static/js/register.js"></script>
+</head>
+
+<body vlink="#FFFF93" alink="#FFFF93" link="#FFFF93">
+
+	<div class="body"></div>
+	<div class="grad"></div>
+	<div class="header">
+		<div>Register<span></span></div>
+	</div>
+	<br>
+	<div class="register">
+		請輸入您的資料:
+		<form action="/register" method="post" style="display: inline">
+		
+			<!-- <font color="#00FFFF">*</font> --><!-- 加必填星星用-->
+			<br>帳號:<input type="text" placeholder="account" name="user" id="user" pattern="\w{6,10}$"
+				onchange="changeAccount()" minlength="6" maxlength="10" required><br>
+			<span id="msgAcc" class="msg">請設定6-10字元的帳號</span><br />
+
+			密碼:<input type="password" placeholder="password" name="password" id="password" onchange="changePwd()"
+				pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,12}$" required><br>
+			<span id="msgPwd" class="msg">請設定8-12字元並至少有一個數字、大寫、小寫英文字母的密碼</span><br />
+
+			確認密碼:<input type="password" placeholder="password" name="passwordCheck" id="passwordCheck"
+				onchange="changePwdCheck()" required><br>
+			<span id="msgPwdCheck" class="msg"></span><br />
+
+			姓名:<input type="text" placeholder="name" name="name" required><br>
+			<br />
+			電話:<input type="tel" placeholder="phone" name="phone" required><br> 
+			<br />
+			<!-- 生日:<input type="date" placeholder="birth" name="birth" required><br> -->
+
+			身份證字號:<input type="text" placeholder="identity" name="identity" id="identity" onchange="changeId()"
+				maxlength="10" minlength="10" pattern="^[A-Z][1-2]\d{8}" required><br>
+			<span id="msgId" class="msg"></span><br />
+
+			<!-- <font color="#00FFFF">*</font>性別:
+			<input type="radio" name="gender" id="male" value="male" required>
+			<label for="male">男</label>
+			<input type="radio" name="gender" id="female" value="female">
+			<label for="female">女</label>
+			<input type="radio" name="gender" id="none" value="none">
+			<label for="none">不願透露</label><br> -->
+
+			<!-- <font color="#00FFFF">*</font> -->
+			信箱:<input type="email" placeholder="email" name="email" id="email" onchange="changeEmail()" required><br>
+			<span id="msgEmail" class="msg"></span><br />
+
+			<!-- <font color="#00FFFF">*</font> -->
+			<!-- <form enctype="multipart/form-data">
+				大頭貼上傳:<input type="file" id="profile_pic" name="profile_pic" accept=".jpg, .jpeg, .png"><br>
+				可接受檔案類型:.jpg, .jpeg, .png
+			</form> -->
+
+			<br />
+			<input type="submit" value="註冊">
+			<input type="reset" value="清除">
+		</form>
+
+		<a href="/index">
+			<input type="submit" value="回首頁">
+		</a>
+
+		<br>
+		<a href="/login">
+			立即登入
+		</a>
+		<br>
+		<a href="/sendNewPwd">
+			忘記密碼
+		</a>
+
+	</div>
+
+	<script src='http://codepen.io/assets/libs/fullpage/jquery.js'></script>
+
+</body>
+
+</html>

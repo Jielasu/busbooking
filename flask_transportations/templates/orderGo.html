@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>國光客運單程訂票系統</title>
+
+	<script src="https://code.jquery.com/jquery-3.7.1.js"
+		integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"
+		integrity="sha256-6XMVI0zB8cRzfZjqKcD01PBsAy3FlDASrlC8SxCpInY=" crossorigin="anonymous"></script>
+	<script src="../static/js/orderGo.js" type="text/javascript"></script>
+	<script src="../static/js/date.js" type="text/javascript"></script>
+	<script src="../static/js/time.js" type="text/javascript"></script>
+
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+	<!-- <link rel="stylesheet" href="//resources/demos/style.css"> -->
+	<link rel="stylesheet" href="../static/css/viewSchedule.css">
+
+	<link rel="stylesheet" href="../static/css/base.css">
+
+</head>
+
+<body>
+
+	<div id="col_head">
+		<ul>
+			<li><a href="/index" class="active">首頁</a></li>
+			<li><a href="/viewSchedule">查詢班次&票價</a></li>
+			<li><a href="/orderGo">網路訂票</a></li>
+			<li><a href="#">訂票紀錄查詢</a></li>
+			<li><a href="#">取消訂票</a></li>
+
+			<li style="float:right"><a href="/logout">您好，這邊登出</a></li>
+
+		</ul>
+	</div>
+
+	<div id="col_content">
+		<form id="search" method="POST" action="/orderGo" onsubmit="return search()">
+			<div class="outstation">
+				<label>起站:</label>
+				<select name="startStation" id="startStation"
+					onchange="changefield('startStation',finalStation,'/getSelect')">
+					<option value="none"> 請選擇 </option>
+					{% for start in data["starts"] %}
+					<option value="{{ data['starts'][start] }}"> {{ start }} </option>
+					{% endfor %}
+				</select>
+
+				&emsp;&emsp;&emsp;&emsp;
+
+				<label> 迄站:</label>
+				<select name="finalStation" id="finalStation" required>
+					{# 这里空着 等待获取后端返回的数据再写 #}
+				</select>
+			</div>
+
+			<div class="outstation">
+				<!-- 日期區間:<input type="date" name="startDate" id="startDate">~
+										<input type="date" name="endDate" id="endDate">
+											<script src="..\static\js\date.js"></script> -->
+
+				<label for="from">乘車日期:</label>
+				<input type="text" id="startDate" name="startDate" pattern="[0-1]\d/[0-3]\d/[2-9]\d{3}"
+					onchange="changeStartDate()" required>
+				<!-- <label for="to">到:</label> -->
+				<input type="text" id="finalDate" name="finalDate" pattern="[0-1]\d/[0-3]\d/[2-9]\d{3}" hidden>
+				<label for="time">預計乘車時間:</label>
+				<select name="hours" id="hours">
+					{% for hour in data["hours"] %}
+					<option value="{{ hour }}"> {{ hour }} </option>
+					{% endfor %}
+				</select>時
+				<select name="minutes" id="minutes">
+					{% for minute in data["minutes"] %}
+					<option value="{{ minute }}"> {{ minute }} </option>
+					{% endfor %}
+				</select>分
+
+			</div>
+			<br />
+
+			&emsp;<input type="submit" value="查詢" class="buttons" id="submit">
+			<input type="reset" value="清除" class="buttons">
+
+		</form><br />
+		&emsp;請注意您選擇的乘車時間,不可早於現在時間且不可早於發車前 2 小時。<br />
+		&emsp;僅顯示前後共3個班次。
+		<!-- &emsp;實際空位數以車站售票為準。<br />
+		&emsp;實際票價以搭車日期及現場票價為準。 -->
+		<!-- <a href="https://www.w3schools.com/" target="_blank">
+		<input type="submit" value="回首頁頁" class="buttons">
+	</a> -->
+		<br /><br />
+
+		<div id="showWait">
+		</div>
+
+		<!-- return render_template("viewSchedule.html", results=[schedule.to_html(classes="data",header="true")]) -->
+		<div id="searchResult">
+			{% for result in results %}
+			{{ result| safe}}
+			{% endfor %}
+		</div>
+	</div>
+	<div id="col_side">
+		{{ data["iframe"]|safe }}
+	</div>
+
+</body>
+
+</html>

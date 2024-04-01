@@ -1,0 +1,109 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>國光客運查詢系統</title>
+
+	<script src="https://code.jquery.com/jquery-3.7.1.js"
+		integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"
+		integrity="sha256-6XMVI0zB8cRzfZjqKcD01PBsAy3FlDASrlC8SxCpInY=" crossorigin="anonymous"></script>
+	<script src="../static/js/station.js" type="text/javascript"></script>
+	<script src="../static/js/date.js" type="text/javascript"></script>
+
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+	<!-- <link rel="stylesheet" href="//resources/demos/style.css"> -->
+	<link rel="stylesheet" href="../static/css/viewSchedule.css">
+
+	<link rel="stylesheet" href="../static/css/base.css">
+</head>
+
+<body>
+	<div id="col_head">
+		<ul>
+			<li><a href="/index" class="active" target="_blank">首頁</a></li>
+			<li><a href="/viewSchedule">查詢班次&票價</a></li>
+			<li><a href="/orderGo" target="_blank">單程訂票</a></li>
+			<li><a href="#" target="_blank">訂票紀錄查詢</a></li>
+			<li><a href="#" target="_blank">取消訂票</a></li>
+	
+			<li style="float:right"><a href="/logout">您好，這邊登出</a></li>
+		  
+		</ul>
+	</div>
+
+	<div id="col_content">
+		<form id="search">
+			<div class="outstation">
+				<label>起站:</label>
+				<select name="startStation" id="startStation">
+
+					<option value="{{ result['startStaName']}}"> {{ result['startStaName'] }} </option>
+
+				</select>
+
+				&emsp;&emsp;&emsp;&emsp;
+
+				<label> 迄站:</label>
+				<select name="finalStation" id="finalStation">
+					<option value="{{ result['finalStaName']}}"> {{ result['finalStaName'] }} </option>
+				</select>
+			</div>
+
+			<div class="outstation">
+				<!-- 日期區間:<input type="date" name="startDate" id="startDate">~
+	<input type="date" name="endDate" id="endDate">
+	<script src="..\static\js\date.js"></script> -->
+
+				<label for="from">乘車日期:</label>
+				<input type="text" id="startDate" name="startDate" value="{{result['startDate']}}" disabled>
+				<label for="to">到:</label>
+				<input type="text" id="finalDate" name="finalDate" value="{{result['finalDate']}}" disabled>
+			</div>
+			<br />
+
+			&emsp;<input type="submit" value="查詢" class="buttons" id="submit" disabled>
+			<input type="reset" value="清除" class="buttons" disabled>
+			<form action="./viewSchedule" method="post">
+				<a href="./viewSchedule">
+					<input type="submit" value="回查詢頁" class="buttons">
+				</a>
+			</form>
+		</form><br />
+		&emsp;實際空位數以車站售票為準。<br />
+		&emsp;實際票價以搭車日期及現場票價為準。
+
+		<br /><br />
+
+		<div id="searchResult">
+			{% for start,final,date,time,via,type,price1,price2 in
+			result["start"]|zip(result["final"],result["date"],result["time"],result["via"],result["type"],result["price1"],result["price2"])
+			%}
+			<!-- {{ r|safe }} -->
+			<div class="result">
+				<span class="pos_left">
+					<strong>{{ date }}&emsp;{{ time }}&emsp;{{ type }}</strong> <br />
+					&emsp;&emsp;&emsp;&emsp;&emsp;<small>{{ via }}</small>
+					<br />
+					{{ start }}&emsp;&emsp;&emsp;&rarr;&emsp;&emsp;&emsp;{{ final }}
+				</span>
+
+				&emsp;&emsp;&emsp;&emsp;&emsp;
+				<span class="pos_right">
+					全票:{{ price1 }}
+					優惠票:{{ price2 }}
+				</span>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+	<div id="col_side">
+		{{ iframe|safe }}
+	</div>
+
+</body>
+
+</html>

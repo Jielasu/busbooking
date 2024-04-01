@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+	<meta charset="UTF-8">
+
+	<title>Register Form</title>
+
+	<link rel="stylesheet" href="../static/css/forgetPwd.css">
+
+	<script src="https://code.jquery.com/jquery-3.7.1.js"
+		integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+	<script src="../static/js/prefixfree.min.js"></script>
+	<script src="../static/js/forgetPwd.js"></script>
+</head>
+
+<body vlink="#FFFF93" alink="#FFFF93" link="#FFFF93">
+
+	<div class="body"></div>
+	<div class="grad"></div>
+	<div class="header">
+		<div>ForgetPassword<span></span></div>
+	</div>
+	<br>
+	<div class="register">
+		<strong style="color:yellow;">{{ data["error"] }}</strong><br>
+		請輸入您的帳號，會重發信件到您註冊的email:
+		<form action="/sendNewPwd" method="post" style="display: inline">
+			<!-- <font color="#00FFFF">*</font> --><!-- 加必填星星用-->
+			<br>帳號:<input type="text" placeholder="account" name="user" id="user" pattern="\w{6,10}$"
+				onchange="changeAccount()" minlength="6" maxlength="10"
+				value="{{ data['user'] }}" required><br>
+			<span id="msgAcc" class="msg">請輸入當初設定的帳號</span><br />
+
+			<input type="submit" value="寄信">
+			<input type="reset" value="清除">
+		</form>
+
+		<a href="/index">
+			<input type="submit" value="回首頁">
+		</a>
+		<br>
+		<a href="/register">
+			立即註冊
+		</a>
+		<br>
+		<a href="/login">
+			立即登入
+		</a>
+	</div>
+
+	<script src='http://codepen.io/assets/libs/fullpage/jquery.js'></script>
+
+</body>
+
+</html>

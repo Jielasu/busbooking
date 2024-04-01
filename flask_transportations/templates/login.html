@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+	<meta charset="UTF-8">
+
+	<title>Login Form</title>
+
+	<link rel="stylesheet" href="../static/css/logStyle.css">
+
+	<script src="../static/js/prefixfree.min.js"></script>
+
+</head>
+
+<body vlink="#FFFF93" alink="#FFFF93" link="#FFFF93">
+	<div class="body"></div>
+	<div class="grad"></div>
+	<div class="header">
+		<div>Login<span></span></div>
+	</div>
+	<br>
+	<div class="login">
+		<strong style="color:yellow;">{{ data["msg"] }}</strong><br>
+		請輸入您的帳號密碼:
+		<form action="/login" method="post" style="display: inline">
+			<br>帳號:<input type="text" placeholder="account" name="user" minlength="6" maxlength="10" 
+			value="{{ data['user'] }}" required><br>
+			密碼:<input type="password" placeholder="password" name="password" required><br>
+			<br />
+			<input type="submit" value="登入">
+			<input type="reset" value="清除">
+		</form>
+
+		<a href="/index">
+			<input type="submit" value="回首頁">
+		</a>
+		<br>
+		<a href="/register">
+			立即註冊
+		</a>
+		<br>
+		<a href="/sendNewPwd">
+			忘記密碼
+		</a>
+	</div>
+
+	<script src='http://codepen.io/assets/libs/fullpage/jquery.js'></script>
+
+</body>
+
+</html>
